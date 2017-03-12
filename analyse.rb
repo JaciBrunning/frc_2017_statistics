@@ -11,7 +11,7 @@ ALL_STATS = [
     ["Rotor Points", "rotor_points", [["auto", "auto"], ["teleop", "teleop"]]],
     ["Takeoff Points", "takeoff_points", [["teleop", "teleop"]]],
     ["Fuel High Points", "fuel_high_points", [["auto", "auto"], ["teleop", "teleop"]]],
-    ["Fuel Low Points", "fuel_high_points", [["auto", "auto"], ["teleop", "teleop"]]],
+    ["Fuel Low Points", "fuel_low_points", [["auto", "auto"], ["teleop", "teleop"]]],
     ["Foul Count", "count", ["foul", "tech_foul"]]
 ]
 
