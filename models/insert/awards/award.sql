@@ -1,0 +1,1 @@
+INSERT OR IGNORE INTO award_types(id, name) VALUES (?, ?);
