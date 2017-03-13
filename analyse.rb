@@ -27,21 +27,29 @@ PLAYOFF_STATS = [
 
 # Build Stat Queries
 def exec_all_stat key
-    @db.get_first_row(["SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m",
+    query = ["SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m",
     "INNER JOIN matches ON m.match == matches.id, match_levels ON matches.match_level == match_levels.id",
-    WHERE.map { |x| "WHERE #{x[0]}#{x[1]}#{x[2]}" }].flatten.join(" "))
+    [WHERE.size > 0 ? "WHERE" : ""],
+    WHERE.map { |x| "#{x[0]}#{x[1]}#{x[2]}" }.join(" AND ")].flatten.join(" ")
+    @db.get_first_row(query)
 end
 
 def exec_qual_stat key
-    @db.get_first_row(["SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m",
+    query = ["SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m",
     "INNER JOIN matches ON m.match == matches.id, match_levels ON matches.match_level == match_levels.id",
-    "WHERE match_levels.key != \"qm\""].join(" "))
+    "WHERE match_levels.key != \"qm\"",
+    [WHERE.size > 0 ? "AND" : ""],
+    WHERE.map { |x| "#{x[0]}#{x[1]}#{x[2]}" }.join(" AND ")].join(" ")
+    @db.get_first_row(query)
 end
 
 def exec_playoff_stat key
-    @db.get_first_row(["SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m",
+    query = ["SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m",
     "INNER JOIN matches ON m.match == matches.id, match_levels ON matches.match_level == match_levels.id",
-    "WHERE match_levels.key != \"qm\""].join(" "))
+    "WHERE match_levels.key != \"qm\"",
+    [WHERE.size > 0 ? "AND" : ""],
+    WHERE.map { |x| "#{x[0]}#{x[1]}#{x[2]}" }.join(" AND ")].join(" ")
+    @db.get_first_row(query)
 end
 
 # Prefetch Total Scores
@@ -52,7 +60,7 @@ end
 @totals_out = {"total": [], "auto": [], "teleop": []}
 
 # Printing Code
-def print_stat stat, totals
+def print_stat stat, totals, match_type
     human_name = stat[0]
     suffix = stat[1]
     prefixes = stat[2]
@@ -66,7 +74,9 @@ def print_stat stat, totals
             compare = prefix[1]
         end
 
-        q = exec_all_stat("#{pre}_#{suffix}")
+        q = exec_all_stat("#{pre}_#{suffix}") if match_type == :all
+        q = exec_qual_stat("#{pre}_#{suffix}") if match_type == :qual
+        q = exec_playoff_stat("#{pre}_#{suffix}") if match_type == :playoff
         printf "%12s %13s: %6d (%6.2f)\n", "", pre, q["total"], q["avg"]
         unless compare.nil?
             @totals_out[compare.to_sym].push [human_name, pre, q["total"]/totals[compare]*100]
@@ -79,17 +89,17 @@ end
 puts "======================="
 puts "      ALL MATCHES      "
 puts "======================="
-ALL_STATS.each { |s| print_stat s, @totals }
+ALL_STATS.each { |s| print_stat s, @totals, :all }
 
 puts "======================="
 puts " QUALIFICATION MATCHES "
 puts "======================="
-QUAL_STATS.each { |s| print_stat s, @qual_totals }
+QUAL_STATS.each { |s| print_stat s, @qual_totals, :qual }
 
 puts "======================="
 puts "    PLAYOFF MATCHES    "
 puts "======================="
-PLAYOFF_STATS.each { |s| print_stat s, @qual_totals }
+PLAYOFF_STATS.each { |s| print_stat s, @qual_totals, :playoff }
 
 puts "======================="
 puts "    SCORE BREAKDOWN    "
