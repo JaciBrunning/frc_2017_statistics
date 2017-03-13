@@ -1,6 +1,7 @@
 require 'sqlite3'
 
-WHERE = ARGV.join(" ").scan(/WHERE ([^\s]*)([!=]+)([^\s]*)/)
+WHERE = ARGV.join(" ").scan(/WHERE ([^\s]*)\s*([!=><]+)\s*([^\s]*)/)
+CUSTOM_SQL = ARGV.join(" ").scan(/SQL\[(.*)\]/)
 
 DB_FILE = "frc2017.db"
 @db = SQLite3::Database.new DB_FILE
@@ -29,6 +30,7 @@ PLAYOFF_STATS = [
 def exec_all_stat key
     query = ["SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m",
     "INNER JOIN matches ON m.match == matches.id, match_levels ON matches.match_level == match_levels.id",
+    [CUSTOM_SQL],
     [WHERE.size > 0 ? "WHERE" : ""],
     WHERE.map { |x| "#{x[0]}#{x[1]}#{x[2]}" }.join(" AND ")].flatten.join(" ")
     @db.get_first_row(query)
@@ -37,7 +39,8 @@ end
 def exec_qual_stat key
     query = ["SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m",
     "INNER JOIN matches ON m.match == matches.id, match_levels ON matches.match_level == match_levels.id",
-    "WHERE match_levels.key != \"qm\"",
+    [CUSTOM_SQL],
+    "WHERE match_levels.key == \"qm\"",
     [WHERE.size > 0 ? "AND" : ""],
     WHERE.map { |x| "#{x[0]}#{x[1]}#{x[2]}" }.join(" AND ")].join(" ")
     @db.get_first_row(query)
@@ -46,6 +49,7 @@ end
 def exec_playoff_stat key
     query = ["SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m",
     "INNER JOIN matches ON m.match == matches.id, match_levels ON matches.match_level == match_levels.id",
+    [CUSTOM_SQL],
     "WHERE match_levels.key != \"qm\"",
     [WHERE.size > 0 ? "AND" : ""],
     WHERE.map { |x| "#{x[0]}#{x[1]}#{x[2]}" }.join(" AND ")].join(" ")
