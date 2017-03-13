@@ -1,5 +1,7 @@
 require 'sqlite3'
 
+WHERE = ARGV.join(" ").scan(/WHERE ([^\s]*)([!=]+)([^\s]*)/)
+
 DB_FILE = "frc2017.db"
 @db = SQLite3::Database.new DB_FILE
 @db.results_as_hash = true
@@ -25,7 +27,9 @@ PLAYOFF_STATS = [
 
 # Build Stat Queries
 def exec_all_stat key
-    @db.get_first_row("SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m")
+    @db.get_first_row(["SELECT sum(m.#{key}) as [total], avg(m.#{key}) as [avg] FROM match_scores AS m",
+    "INNER JOIN matches ON m.match == matches.id, match_levels ON matches.match_level == match_levels.id",
+    WHERE.map { |x| "WHERE #{x[0]}#{x[1]}#{x[2]}" }].flatten.join(" "))
 end
 
 def exec_qual_stat key
