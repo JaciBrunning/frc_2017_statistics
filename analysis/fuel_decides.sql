@@ -28,4 +28,6 @@ INNER JOIN match_scores AS loser ON loser.id == score_differential.lose_score
 INNER JOIN fuel_points AS winner_nofuel ON winner_nofuel.id == winner.id
 INNER JOIN fuel_points AS loser_nofuel ON loser_nofuel.id == loser.id
 INNER JOIN matches ON winner.match == matches.id
+<SQL>
 WHERE (loser_nofuel >= winner_nofuel OR (loser_nofuel <= winner_nofuel AND score_differential.points_diff == 0)) AND NOT (winner_raw == loser_raw AND winner_nofuel == loser_nofuel)
+<WHERE>

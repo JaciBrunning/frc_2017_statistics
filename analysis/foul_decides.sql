@@ -28,4 +28,6 @@ INNER JOIN match_scores AS loser ON loser.id == score_differential.lose_score
 INNER JOIN foul_points AS winner_nofoul ON winner_nofoul.id == winner.id
 INNER JOIN foul_points AS loser_nofoul ON loser_nofoul.id == loser.id
 INNER JOIN matches ON winner.match == matches.id
+<SQL>
 WHERE (loser_nofoul >= winner_nofoul OR (loser_nofoul <= winner_nofoul AND score_differential.points_diff == 0)) AND NOT (winner_raw == loser_raw AND winner_nofoul == loser_nofoul)
+<WHERE>

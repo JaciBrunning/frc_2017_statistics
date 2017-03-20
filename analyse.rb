@@ -56,6 +56,10 @@ def exec_playoff_stat key
     @db.get_first_row(query)
 end
 
+def exec_from_file sql
+	@db.execute(File.read(sql).gsub("<SQL>", [CUSTOM_SQL].flatten.join(" ")).gsub("<WHERE>", [WHERE.size > 0 ? "AND" : "", WHERE.map { |x| "#{x[0]}#{x[1]}#{x[2]}" }.join(" AND ")].join(" ")))
+end
+
 # Prefetch Total Scores
 @totals = Hash[["total", "auto", "teleop"].map { |x| [x, exec_all_stat("#{x}_points")["total"].to_f] }]
 @qual_totals = Hash[["total", "auto", "teleop"].map { |x| [x, exec_all_stat("#{x}_points")["total"].to_f] }]
@@ -124,13 +128,10 @@ puts "======================="
 puts "   MISCELLANEOUS DATA  "
 puts "======================="
 
-fuel_deciders = @db.execute(File.read("analysis/fuel_decides.sql")).count
-foul_deciders = @db.execute(File.read("analysis/foul_decides.sql")).count
-loser_climbs = @db.execute(File.read("analysis/losers_more_climbs_than_winners.sql")).count
+fuel_deciders = exec_from_file("analysis/fuel_decides.sql").count
+foul_deciders = exec_from_file("analysis/foul_decides.sql").count
 
 match_count = @db.get_first_row("SELECT count(matches.id) as [count] FROM matches")["count"]
 
 printf "%20s: %8d (%3.1f%%)\n", "Wins due to Fuel", fuel_deciders, (fuel_deciders.to_f / match_count*100)
 printf "%20s: %8d (%3.1f%%)\n", "Wins due to Fouls", foul_deciders, (foul_deciders.to_f / match_count*100)
-puts
-printf "%20s: %8d (%3.1f%%)\n", "L Climbs > W Climbs", loser_climbs, (loser_climbs.to_f / match_count*100)
