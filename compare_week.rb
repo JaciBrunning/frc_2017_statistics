@@ -29,9 +29,9 @@ end
 def map_values arr
     lines = []
     arr.split(/\n/).map do |line|
-        totals_avgs = line.scan(/([0-9.]+)\s+\(\s*([0-9.]+)\)/).flatten
-        misc = line.scan(/([0-9.]+)\s+\(\s*([0-9.]+)%\)/).flatten
-        percs = line.scan(/([0-9.]+)%/).flatten
+        totals_avgs = line.scan(/([0-9.-]+)\s+\(\s*([0-9.-]+)\)/).flatten
+        misc = line.scan(/([0-9.-]+)\s+\(\s*([0-9.-]+)%\)/).flatten
+        percs = line.scan(/([0-9.-]+)%/).flatten
         percs = [] if misc.count > 1
         lines << [totals_avgs, misc, percs]
     end
