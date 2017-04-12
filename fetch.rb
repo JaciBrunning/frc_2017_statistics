@@ -16,6 +16,7 @@ SKIP_MATCH = ARGV.include? "--skip-matches"
 SKIP_AWARD = ARGV.include? "--skip-awards"
 SKIP_STATS = ARGV.include? "--skip-stats"
 SKIP_RANK = ARGV.include? "--skip-ranks"
+SKIP_DIVISIONS = ARGV.include? "--skip-divisions"
 
 PURGE_DB = ARGV.include? "--purge-db"       # Force a new DB to be made
 PURGE_CACHE = ARGV.include? "--purge-cache" # Force all TBA Caches to be remade
@@ -29,6 +30,7 @@ CACHE_DIRTY_DISTRICT_RANKS = ARGV.include? "--dirty-district-ranks" # Force TBA 
 CACHE_DIRTY_STATS = ARGV.include? "--dirty-stats"   # Force TBA stats cache (opr, dpr, etc) to be remade
 CACHE_DIRTY_RANKS = ARGV.include? "--dirty-ranks"   # Force TBA ranks cache (event rankings) to be remade
 CACHE_DIRTY_AWARDS = ARGV.include? "--dirty-award"  # Force TBA awards cache (award recipients) to be remade
+CACHE_DIRTY_DIVISIONS = ARGV.include? "--dirty-division"    # Force divisions.co cache to be remade
 # Alliances are dirtied by events.
 CACHE_DIRTY_MATCHES = ARGV.include? "--dirty-matches" # Force TBA matches cache to be remade
 
@@ -92,6 +94,19 @@ def tba_call api_ref, force=false
     end
 end
 
+def divisions_call force=false
+    url = "https://frc.divisions.co/api/v2/team_list"
+    hashfile = "#{CACHE_FOLDER}/#{Digest::MD5.hexdigest(url)}"
+    File.delete(hashfile) if (File.exists?(hashfile) && (PURGE_CACHE || force))
+    if File.exists?(hashfile)
+        JSON.parse(File.read(hashfile))
+    else
+        response = open(url, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
+        File.write(hashfile, response)
+        JSON.parse response
+    end
+end
+
 FileUtils.rm_rf(CACHE_FOLDER) if File.exists?(CACHE_FOLDER) && PURGE_CACHE
 FileUtils.mkdir_p(CACHE_FOLDER)
 File.delete(DB_FILE) if File.exists?(DB_FILE) && PURGE_DB
@@ -100,6 +115,7 @@ newfile = !File.exists?(DB_FILE)
 
 if newfile
     load_and_run("create/districts")
+    load_and_run("create/divisions")
     load_and_run("create/teams")
     load_and_run("create/events")
     load_and_run("create/alliances")
@@ -278,7 +294,7 @@ unless SKIP_AWARD
             
             unless a["recipient_list"].nil?
                 a["recipient_list"].each do |r|
-                    query "insert/awards/recipient", [
+                    queryt "insert/awards/recipient", [
                         a["event_key"], r["team_number"], r["awardee"], a["award_type"]
                     ]
                 end
@@ -388,4 +404,16 @@ unless SKIP_MATCH
         end
         @db.commit
     end
+end
+
+unless SKIP_DIVISIONS
+    puts
+    puts "Inserting Divisions..."
+    divs = divisions_call CACHE_DIRTY_DIVISIONS
+    @db.transaction
+    divs.each do |div_entry|
+        print "   Team #{div_entry['team_number']}..."
+        queryv "insert/divisions", [ div_entry['region'], div_entry['division_name'].nil? ? "Unknown" : div_entry['division_name'], div_entry['team_number'].to_i ]
+    end
+    @db.commit
 end
