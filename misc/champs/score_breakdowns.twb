@@ -1,0 +1,1876 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 9200.15.1215.2037                                -->
+<workbook source-platform='win' version='9.2' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='teams+ (CUsersJackDropboxFRC 2017 Databasefrc2017.db)' inline='true' name='genericodbc.0vokqz30bjh9n01380imm0uvatx1' version='9.2'>
+      <connection class='genericodbc' dbname='C:\Users\Jack\Dropbox\FRC 2017 Database\frc2017.db' odbc-connect-string-extras='StepAPI=0;SyncPragma=NORMAL;NoTXN=0;Timeout=100000;ShortNames=0;LongNames=0;NoCreat=0;NoWCHAR=0;FKSupport=0;JournalMode=;OEMCP=0;LoadExt=;BigInt=0;JDConv=0' odbc-dbms-name='SQLite' odbc-driver='SQLite3 ODBC Driver' odbc-dsn='SQLite3 Datasource' odbc-suppress-connection-pooling='' odbc-use-connection-pooling='' port='' server='' username=''>
+        <relation join='inner' type='join'>
+          <clause type='join'>
+            <expression op='='>
+              <expression op='[matches].[match_level]' />
+              <expression op='[match_levels].[id]' />
+            </expression>
+          </clause>
+          <relation join='inner' type='join'>
+            <clause type='join'>
+              <expression op='='>
+                <expression op='[match_scores].[match]' />
+                <expression op='[matches].[id]' />
+              </expression>
+            </clause>
+            <relation join='inner' type='join'>
+              <clause type='join'>
+                <expression op='AND'>
+                  <expression op='='>
+                    <expression op='[match_teams].[match]' />
+                    <expression op='[match_scores].[match]' />
+                  </expression>
+                  <expression op='='>
+                    <expression op='[match_teams].[alliance_color]' />
+                    <expression op='[match_scores].[alliance_color]' />
+                  </expression>
+                </expression>
+              </clause>
+              <relation join='inner' type='join'>
+                <clause type='join'>
+                  <expression op='='>
+                    <expression op='[teams].[id]' />
+                    <expression op='[match_teams].[team]' />
+                  </expression>
+                </clause>
+                <relation join='inner' type='join'>
+                  <clause type='join'>
+                    <expression op='='>
+                      <expression op='[division_teams].[division_name]' />
+                      <expression op='[division_event_count].[division_name]' />
+                    </expression>
+                  </clause>
+                  <relation join='inner' type='join'>
+                    <clause type='join'>
+                      <expression op='='>
+                        <expression op='[teams].[id]' />
+                        <expression op='[division_teams].[team]' />
+                      </expression>
+                    </clause>
+                    <relation name='teams' table='[teams]' type='table' />
+                    <relation name='division_teams' table='[division_teams]' type='table' />
+                  </relation>
+                  <relation name='division_event_count' type='text'>SELECT division_teams.division_name, Count(distinct event_teams.id) as [Event Count], 1.0/Count(distinct event_teams.id) as [Awards Weighting] FROM teams&#13;&#10;INNER JOIN division_teams ON division_teams.team = teams.id&#13;&#10;INNER JOIN event_teams ON event_teams.team = teams.id&#13;&#10;WHERE division_teams.division_name != &quot;Unknown&quot;&#13;&#10;GROUP BY division_teams.division_name</relation>
+                </relation>
+                <relation name='match_teams' table='[match_teams]' type='table' />
+              </relation>
+              <relation name='match_scores' table='[match_scores]' type='table' />
+            </relation>
+            <relation name='matches' table='[matches]' type='table' />
+          </relation>
+          <relation name='match_levels' table='[match_levels]' type='table' />
+        </relation>
+        <cols>
+          <map key='[Awards Weighting]' value='[division_event_count].[Awards Weighting]' />
+          <map key='[Event Count]' value='[division_event_count].[Event Count]' />
+          <map key='[adjust_points]' value='[match_scores].[adjust_points]' />
+          <map key='[alliance_color (match_scores)]' value='[match_scores].[alliance_color]' />
+          <map key='[alliance_color]' value='[match_teams].[alliance_color]' />
+          <map key='[alliance_station]' value='[match_teams].[alliance_station]' />
+          <map key='[auto_fuel_high]' value='[match_scores].[auto_fuel_high]' />
+          <map key='[auto_fuel_high_points]' value='[match_scores].[auto_fuel_high_points]' />
+          <map key='[auto_fuel_low]' value='[match_scores].[auto_fuel_low]' />
+          <map key='[auto_fuel_low_points]' value='[match_scores].[auto_fuel_low_points]' />
+          <map key='[auto_fuel_points]' value='[match_scores].[auto_fuel_points]' />
+          <map key='[auto_mobility_points]' value='[match_scores].[auto_mobility_points]' />
+          <map key='[auto_points]' value='[match_scores].[auto_points]' />
+          <map key='[auto_rotor_points]' value='[match_scores].[auto_rotor_points]' />
+          <map key='[champ_name]' value='[division_teams].[champ_name]' />
+          <map key='[country]' value='[teams].[country]' />
+          <map key='[division_name (Custom_SQL_Query)]' value='[division_event_count].[division_name]' />
+          <map key='[division_name]' value='[division_teams].[division_name]' />
+          <map key='[event]' value='[matches].[event]' />
+          <map key='[foul_count]' value='[match_scores].[foul_count]' />
+          <map key='[foul_points]' value='[match_scores].[foul_points]' />
+          <map key='[id (division_teams)]' value='[division_teams].[id]' />
+          <map key='[id (match_levels)]' value='[match_levels].[id]' />
+          <map key='[id (match_scores)]' value='[match_scores].[id]' />
+          <map key='[id (match_teams)]' value='[match_teams].[id]' />
+          <map key='[id (matches)]' value='[matches].[id]' />
+          <map key='[id]' value='[teams].[id]' />
+          <map key='[key (match_levels)]' value='[match_levels].[key]' />
+          <map key='[key (matches)]' value='[matches].[key]' />
+          <map key='[key]' value='[teams].[key]' />
+          <map key='[location]' value='[teams].[location]' />
+          <map key='[match (match_scores)]' value='[match_scores].[match]' />
+          <map key='[match]' value='[match_teams].[match]' />
+          <map key='[match_level]' value='[matches].[match_level]' />
+          <map key='[match_number]' value='[matches].[match_number]' />
+          <map key='[name (match_levels)]' value='[match_levels].[name]' />
+          <map key='[name]' value='[teams].[name]' />
+          <map key='[nickname]' value='[teams].[nickname]' />
+          <map key='[pressure_bonus_points]' value='[match_scores].[pressure_bonus_points]' />
+          <map key='[pressure_bonus_rank_point]' value='[match_scores].[pressure_bonus_rank_point]' />
+          <map key='[region]' value='[teams].[region]' />
+          <map key='[rookie_year]' value='[teams].[rookie_year]' />
+          <map key='[rotor_bonus_points]' value='[match_scores].[rotor_bonus_points]' />
+          <map key='[rotor_bonus_rank_point]' value='[match_scores].[rotor_bonus_rank_point]' />
+          <map key='[set_number]' value='[matches].[set_number]' />
+          <map key='[short_name]' value='[match_levels].[short_name]' />
+          <map key='[team (match_teams)]' value='[match_teams].[team]' />
+          <map key='[team]' value='[division_teams].[team]' />
+          <map key='[tech_foul_count]' value='[match_scores].[tech_foul_count]' />
+          <map key='[teleop_fuel_high]' value='[match_scores].[teleop_fuel_high]' />
+          <map key='[teleop_fuel_high_points]' value='[match_scores].[teleop_fuel_high_points]' />
+          <map key='[teleop_fuel_low]' value='[match_scores].[teleop_fuel_low]' />
+          <map key='[teleop_fuel_low_points]' value='[match_scores].[teleop_fuel_low_points]' />
+          <map key='[teleop_fuel_points]' value='[match_scores].[teleop_fuel_points]' />
+          <map key='[teleop_points]' value='[match_scores].[teleop_points]' />
+          <map key='[teleop_rotor_points]' value='[match_scores].[teleop_rotor_points]' />
+          <map key='[teleop_takeoff_points]' value='[match_scores].[teleop_takeoff_points]' />
+          <map key='[total_points]' value='[match_scores].[total_points]' />
+        </cols>
+        <connection-customization class='genericodbc' enabled='false' version='9.2'>
+          <vendor name='SQLite' />
+          <driver name='SQLite3 ODBC Driver' />
+          <customizations>
+            <customization name='CAP_CREATE_TEMP_TABLES' value='no' />
+            <customization name='CAP_ISOLATION_LEVEL_READ_COMMITTED' value='no' />
+            <customization name='CAP_ISOLATION_LEVEL_READ_UNCOMMITTED' value='no' />
+            <customization name='CAP_ISOLATION_LEVEL_REPEATABLE_READS' value='no' />
+            <customization name='CAP_ISOLATION_LEVEL_SERIALIZABLE' value='no' />
+            <customization name='CAP_ODBC_BIND_DETECT_ALIAS_CASE_FOLDING' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_DATETIME_AS_CHAR' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_DATE_AS_CHAR' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_MAX_STRING_BUFFERS' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_MEDIUM_STRING_BUFFERS' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_SIGNED' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_SMALL_STRING_BUFFERS' value='no' />
+            <customization name='CAP_ODBC_BIND_SUPPRESS_INT64' value='no' />
+            <customization name='CAP_ODBC_BIND_SUPPRESS_PREFERRED_TYPES' value='no' />
+            <customization name='CAP_ODBC_BIND_SUPPRESS_WIDE_CHAR' value='no' />
+            <customization name='CAP_ODBC_CURSOR_DYNAMIC' value='no' />
+            <customization name='CAP_ODBC_CURSOR_FORWARD_ONLY' value='no' />
+            <customization name='CAP_ODBC_CURSOR_KEYSET_DRIVEN' value='no' />
+            <customization name='CAP_ODBC_CURSOR_STATIC' value='no' />
+            <customization name='CAP_ODBC_ERROR_IGNORE_FALSE_ALARM' value='no' />
+            <customization name='CAP_ODBC_FETCH_BUFFERS_RESIZABLE' value='no' />
+            <customization name='CAP_ODBC_FETCH_BUFFERS_SIZE_MASSIVE' value='no' />
+            <customization name='CAP_ODBC_FETCH_CONTINUE_ON_ERROR' value='no' />
+            <customization name='CAP_ODBC_METADATA_STRING_LENGTH_UNKNOWN' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_EXECUTED_QUERY' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_PREPARED_QUERY' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_SELECT_STAR' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_SQLCOLUMNS_API' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_SQLFOREIGNKEYS_API' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_SQLPRIMARYKEYS_API' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_SQLSTATISTICS_API' value='no' />
+            <customization name='CAP_ODBC_REBIND_SKIP_UNBIND' value='no' />
+            <customization name='CAP_ODBC_TRIM_VARCHAR_PADDING' value='no' />
+            <customization name='CAP_ODBC_UNBIND_AUTO' value='no' />
+            <customization name='CAP_ODBC_UNBIND_BATCH' value='no' />
+            <customization name='CAP_ODBC_UNBIND_EACH' value='no' />
+            <customization name='CAP_QUERY_BOOLEXPR_TO_INTEXPR' value='yes' />
+            <customization name='CAP_QUERY_FROM_REQUIRES_ALIAS' value='no' />
+            <customization name='CAP_QUERY_GROUP_BY_ALIAS' value='no' />
+            <customization name='CAP_QUERY_GROUP_BY_DEGREE' value='yes' />
+            <customization name='CAP_QUERY_HAVING_REQUIRES_GROUP_BY' value='yes' />
+            <customization name='CAP_QUERY_HAVING_UNSUPPORTED' value='no' />
+            <customization name='CAP_QUERY_JOIN_ACROSS_SCHEMAS' value='no' />
+            <customization name='CAP_QUERY_JOIN_REQUIRES_SCOPE' value='no' />
+            <customization name='CAP_QUERY_NULL_REQUIRES_CAST' value='no' />
+            <customization name='CAP_QUERY_SELECT_ALIASES_SORTED' value='yes' />
+            <customization name='CAP_QUERY_SORT_BY_DEGREE' value='yes' />
+            <customization name='CAP_QUERY_SUBQUERIES' value='yes' />
+            <customization name='CAP_QUERY_SUBQUERIES_WITH_TOP' value='yes' />
+            <customization name='CAP_QUERY_SUBQUERY_QUERY_CONTEXT' value='no' />
+            <customization name='CAP_QUERY_TOPSTYLE_LIMIT' value='yes' />
+            <customization name='CAP_QUERY_TOPSTYLE_ROWNUM' value='no' />
+            <customization name='CAP_QUERY_TOPSTYLE_TOP' value='no' />
+            <customization name='CAP_QUERY_TOP_0_METADATA' value='no' />
+            <customization name='CAP_QUERY_TOP_N' value='yes' />
+            <customization name='CAP_QUERY_WHERE_FALSE_METADATA' value='no' />
+            <customization name='CAP_SELECT_INTO' value='no' />
+            <customization name='CAP_SELECT_TOP_INTO' value='yes' />
+            <customization name='CAP_SET_ISOLATION_LEVEL_VIA_ODBC_API' value='no' />
+            <customization name='CAP_SET_ISOLATION_LEVEL_VIA_SQL' value='no' />
+            <customization name='CAP_SUPPRESS_CONNECTION_POOLING' value='no' />
+            <customization name='CAP_SUPPRESS_DISCOVERY_QUERIES' value='no' />
+            <customization name='SQL_CATALOG_NAME_SEPARATOR' value='.' />
+            <customization name='SQL_CATALOG_TERM' value='' />
+            <customization name='SQL_CATALOG_USAGE' value='0' />
+            <customization name='SQL_COLUMN_ALIAS' value='Y' />
+            <customization name='SQL_CONVERT_FUNCTIONS' value='0' />
+            <customization name='SQL_CURSOR_COMMIT_BEHAVIOR' value='2' />
+            <customization name='SQL_DBMS_NAME' value='SQLite' />
+            <customization name='SQL_DBMS_VER' value='3.15.2' />
+            <customization name='SQL_DRIVER_ODBC_VER' value='03.00' />
+            <customization name='SQL_DRIVER_VER' value='0.9995' />
+            <customization name='SQL_IDENTIFIER_QUOTE_CHAR' value='&quot;' />
+            <customization name='SQL_MAX_IDENTIFIER_LEN' value='255' />
+            <customization name='SQL_NUMERIC_FUNCTIONS' value='0' />
+            <customization name='SQL_ODBC_INTERFACE_CONFORMANCE' value='1' />
+            <customization name='SQL_ODBC_VER' value='03.80.0000' />
+            <customization name='SQL_OJ_CAPABILITIES' value='0' />
+            <customization name='SQL_QUOTED_IDENTIFIER_CASE' value='3' />
+            <customization name='SQL_SCHEMA_TERM' value='' />
+            <customization name='SQL_SCHEMA_USAGE' value='0' />
+            <customization name='SQL_SPECIAL_CHARACTERS' value='' />
+            <customization name='SQL_SQL_CONFORMANCE' value='1' />
+            <customization name='SQL_STRING_FUNCTIONS' value='0' />
+            <customization name='SQL_SYSTEM_FUNCTIONS' value='0' />
+            <customization name='SQL_TABLE_TERM' value='TABLE' />
+            <customization name='SQL_TIMEDATE_ADD_INTERVALS' value='0' />
+            <customization name='SQL_TIMEDATE_DIFF_INTERVALS' value='0' />
+            <customization name='SQL_TIMEDATE_FUNCTIONS' value='0' />
+            <customization name='SQL_TXN_CAPABLE' value='2' />
+          </customizations>
+        </connection-customization>
+        <metadata-records>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>key</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[key]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>key</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>name</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[name]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>name</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>nickname</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[nickname]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>nickname</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>location</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[location]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>location</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>region</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[region]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>region</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>country</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[country]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>country</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>rookie_year</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[rookie_year]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>rookie_year</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id (division_teams)]</local-name>
+            <parent-name>[division_teams]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>champ_name</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[champ_name]</local-name>
+            <parent-name>[division_teams]</parent-name>
+            <remote-alias>champ_name</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>division_name</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[division_name]</local-name>
+            <parent-name>[division_teams]</parent-name>
+            <remote-alias>division_name</remote-alias>
+            <ordinal>12</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>team</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[team]</local-name>
+            <parent-name>[division_teams]</parent-name>
+            <remote-alias>team</remote-alias>
+            <ordinal>13</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>division_name</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[division_name (Custom_SQL_Query)]</local-name>
+            <parent-name>[division_event_count]</parent-name>
+            <remote-alias>division_name</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Event Count</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[Event Count]</local-name>
+            <parent-name>[division_event_count]</parent-name>
+            <remote-alias>Event Count</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>255</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Awards Weighting</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[Awards Weighting]</local-name>
+            <parent-name>[division_event_count]</parent-name>
+            <remote-alias>Awards Weighting</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>255</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id (match_teams)]</local-name>
+            <parent-name>[match_teams]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>18</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>match</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[match]</local-name>
+            <parent-name>[match_teams]</parent-name>
+            <remote-alias>match</remote-alias>
+            <ordinal>19</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>alliance_color</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[alliance_color]</local-name>
+            <parent-name>[match_teams]</parent-name>
+            <remote-alias>alliance_color</remote-alias>
+            <ordinal>20</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>alliance_station</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[alliance_station]</local-name>
+            <parent-name>[match_teams]</parent-name>
+            <remote-alias>alliance_station</remote-alias>
+            <ordinal>21</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>team</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[team (match_teams)]</local-name>
+            <parent-name>[match_teams]</parent-name>
+            <remote-alias>team</remote-alias>
+            <ordinal>22</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id (match_scores)]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>24</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>match</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[match (match_scores)]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>match</remote-alias>
+            <ordinal>25</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>alliance_color</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[alliance_color (match_scores)]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>alliance_color</remote-alias>
+            <ordinal>26</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>teleop_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[teleop_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>teleop_points</remote-alias>
+            <ordinal>27</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>teleop_rotor_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[teleop_rotor_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>teleop_rotor_points</remote-alias>
+            <ordinal>28</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>teleop_fuel_high</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[teleop_fuel_high]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>teleop_fuel_high</remote-alias>
+            <ordinal>29</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>teleop_fuel_high_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[teleop_fuel_high_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>teleop_fuel_high_points</remote-alias>
+            <ordinal>30</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>teleop_fuel_low</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[teleop_fuel_low]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>teleop_fuel_low</remote-alias>
+            <ordinal>31</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>teleop_fuel_low_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[teleop_fuel_low_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>teleop_fuel_low_points</remote-alias>
+            <ordinal>32</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>teleop_fuel_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[teleop_fuel_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>teleop_fuel_points</remote-alias>
+            <ordinal>33</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>teleop_takeoff_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[teleop_takeoff_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>teleop_takeoff_points</remote-alias>
+            <ordinal>34</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>auto_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[auto_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>auto_points</remote-alias>
+            <ordinal>35</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>auto_rotor_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[auto_rotor_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>auto_rotor_points</remote-alias>
+            <ordinal>36</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>auto_fuel_high</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[auto_fuel_high]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>auto_fuel_high</remote-alias>
+            <ordinal>37</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>auto_fuel_high_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[auto_fuel_high_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>auto_fuel_high_points</remote-alias>
+            <ordinal>38</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>auto_fuel_low</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[auto_fuel_low]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>auto_fuel_low</remote-alias>
+            <ordinal>39</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>auto_fuel_low_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[auto_fuel_low_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>auto_fuel_low_points</remote-alias>
+            <ordinal>40</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>auto_fuel_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[auto_fuel_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>auto_fuel_points</remote-alias>
+            <ordinal>41</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>auto_mobility_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[auto_mobility_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>auto_mobility_points</remote-alias>
+            <ordinal>42</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>rotor_bonus_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[rotor_bonus_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>rotor_bonus_points</remote-alias>
+            <ordinal>43</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>rotor_bonus_rank_point</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[rotor_bonus_rank_point]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>rotor_bonus_rank_point</remote-alias>
+            <ordinal>44</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>pressure_bonus_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[pressure_bonus_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>pressure_bonus_points</remote-alias>
+            <ordinal>45</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>pressure_bonus_rank_point</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[pressure_bonus_rank_point]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>pressure_bonus_rank_point</remote-alias>
+            <ordinal>46</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>foul_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[foul_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>foul_points</remote-alias>
+            <ordinal>47</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>foul_count</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[foul_count]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>foul_count</remote-alias>
+            <ordinal>48</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>tech_foul_count</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[tech_foul_count]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>tech_foul_count</remote-alias>
+            <ordinal>49</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>total_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[total_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>total_points</remote-alias>
+            <ordinal>50</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>adjust_points</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[adjust_points]</local-name>
+            <parent-name>[match_scores]</parent-name>
+            <remote-alias>adjust_points</remote-alias>
+            <ordinal>51</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id (matches)]</local-name>
+            <parent-name>[matches]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>53</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>key</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[key (matches)]</local-name>
+            <parent-name>[matches]</parent-name>
+            <remote-alias>key</remote-alias>
+            <ordinal>54</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>event</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[event]</local-name>
+            <parent-name>[matches]</parent-name>
+            <remote-alias>event</remote-alias>
+            <ordinal>55</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>match_level</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[match_level]</local-name>
+            <parent-name>[matches]</parent-name>
+            <remote-alias>match_level</remote-alias>
+            <ordinal>56</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>match_number</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[match_number]</local-name>
+            <parent-name>[matches]</parent-name>
+            <remote-alias>match_number</remote-alias>
+            <ordinal>57</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>set_number</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[set_number]</local-name>
+            <parent-name>[matches]</parent-name>
+            <remote-alias>set_number</remote-alias>
+            <ordinal>58</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id (match_levels)]</local-name>
+            <parent-name>[match_levels]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>60</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>key</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[key (match_levels)]</local-name>
+            <parent-name>[match_levels]</parent-name>
+            <remote-alias>key</remote-alias>
+            <ordinal>61</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>name</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[name (match_levels)]</local-name>
+            <parent-name>[match_levels]</parent-name>
+            <remote-alias>name</remote-alias>
+            <ordinal>62</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>short_name</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[short_name]</local-name>
+            <parent-name>[match_levels]</parent-name>
+            <remote-alias>short_name</remote-alias>
+            <ordinal>63</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column datatype='real' datatype-customized='true' name='[Awards Weighting]' role='measure' type='quantitative' />
+      <column aggregation='CountD' datatype='integer' datatype-customized='true' name='[Event Count]' role='measure' type='quantitative' />
+      <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
+        <calculation class='tableau' formula='1' />
+      </column>
+      <column caption='Adjust Points' datatype='integer' name='[adjust_points]' role='measure' type='quantitative' />
+      <column caption='Alliance Color (Match Scores)' datatype='string' name='[alliance_color (match_scores)]' role='dimension' type='nominal' />
+      <column caption='Alliance Color' datatype='string' name='[alliance_color]' role='dimension' type='nominal' />
+      <column caption='Alliance Station' datatype='integer' name='[alliance_station]' role='measure' type='quantitative' />
+      <column caption='Auto Fuel High' datatype='integer' name='[auto_fuel_high]' role='measure' type='quantitative' />
+      <column caption='Auto Fuel High Points' datatype='integer' name='[auto_fuel_high_points]' role='measure' type='quantitative' />
+      <column caption='Auto Fuel Low' datatype='integer' name='[auto_fuel_low]' role='measure' type='quantitative' />
+      <column caption='Auto Fuel Low Points' datatype='integer' name='[auto_fuel_low_points]' role='measure' type='quantitative' />
+      <column caption='Auto Fuel Points' datatype='integer' name='[auto_fuel_points]' role='measure' type='quantitative' />
+      <column caption='Auto Mobility Points' datatype='integer' name='[auto_mobility_points]' role='measure' type='quantitative' />
+      <column caption='Auto Points' datatype='integer' name='[auto_points]' role='measure' type='quantitative' />
+      <column caption='Auto Rotor Points' datatype='integer' name='[auto_rotor_points]' role='measure' type='quantitative' />
+      <column caption='Champ Name' datatype='string' name='[champ_name]' role='dimension' type='nominal' />
+      <column caption='Country' datatype='string' name='[country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
+      <column caption='Division Name' datatype='string' name='[division_name]' role='dimension' type='nominal' />
+      <column caption='Event' datatype='integer' name='[event]' role='measure' type='quantitative' />
+      <column caption='Foul Count' datatype='integer' name='[foul_count]' role='measure' type='quantitative' />
+      <column caption='Foul Points' datatype='integer' name='[foul_points]' role='measure' type='quantitative' />
+      <column caption='Id (Division Teams)' datatype='integer' name='[id (division_teams)]' role='dimension' type='ordinal' />
+      <column caption='Id (Match Levels)' datatype='integer' name='[id (match_levels)]' role='dimension' type='ordinal' />
+      <column caption='Id (Match Scores)' datatype='integer' name='[id (match_scores)]' role='dimension' type='ordinal' />
+      <column caption='Id (Match Teams)' datatype='integer' name='[id (match_teams)]' role='dimension' type='ordinal' />
+      <column caption='Id (Matches)' datatype='integer' name='[id (matches)]' role='dimension' type='ordinal' />
+      <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+      <column caption='Key (Match Levels)' datatype='string' name='[key (match_levels)]' role='dimension' type='nominal' />
+      <column caption='Key (Matches)' datatype='string' name='[key (matches)]' role='dimension' type='nominal' />
+      <column caption='Key' datatype='string' name='[key]' role='dimension' type='nominal' />
+      <column caption='Location' datatype='string' name='[location]' role='dimension' type='nominal' />
+      <column caption='Match (Match Scores)' datatype='integer' name='[match (match_scores)]' role='measure' type='quantitative' />
+      <column caption='Match' datatype='integer' name='[match]' role='measure' type='quantitative' />
+      <column caption='Match Level' datatype='integer' name='[match_level]' role='measure' type='quantitative' />
+      <column caption='Match Number' datatype='integer' name='[match_number]' role='dimension' type='ordinal' />
+      <column caption='Name (Match Levels)' datatype='string' name='[name (match_levels)]' role='dimension' type='nominal' />
+      <column caption='Name' datatype='string' name='[name]' role='dimension' type='nominal' />
+      <column caption='Nickname' datatype='string' name='[nickname]' role='dimension' type='nominal' />
+      <column caption='Pressure Bonus Points' datatype='integer' name='[pressure_bonus_points]' role='measure' type='quantitative' />
+      <column caption='Pressure Bonus Rank Point' datatype='integer' name='[pressure_bonus_rank_point]' role='measure' type='quantitative' />
+      <column caption='Region' datatype='string' name='[region]' role='dimension' type='nominal' />
+      <column caption='Rookie Year' datatype='integer' name='[rookie_year]' role='dimension' type='quantitative' />
+      <column caption='Rotor Bonus Points' datatype='integer' name='[rotor_bonus_points]' role='measure' type='quantitative' />
+      <column caption='Rotor Bonus Rank Point' datatype='integer' name='[rotor_bonus_rank_point]' role='measure' type='quantitative' />
+      <column caption='Set Number' datatype='integer' name='[set_number]' role='dimension' type='ordinal' />
+      <column caption='Short Name' datatype='string' name='[short_name]' role='dimension' type='nominal' />
+      <column caption='Team (Match Teams)' datatype='integer' name='[team (match_teams)]' role='measure' type='quantitative' />
+      <column caption='Team' datatype='integer' name='[team]' role='measure' type='quantitative' />
+      <column caption='Tech Foul Count' datatype='integer' name='[tech_foul_count]' role='measure' type='quantitative' />
+      <column caption='Teleop Fuel High' datatype='integer' name='[teleop_fuel_high]' role='measure' type='quantitative' />
+      <column caption='Teleop Fuel High Points' datatype='integer' name='[teleop_fuel_high_points]' role='measure' type='quantitative' />
+      <column caption='Teleop Fuel Low' datatype='integer' name='[teleop_fuel_low]' role='measure' type='quantitative' />
+      <column caption='Teleop Fuel Low Points' datatype='integer' name='[teleop_fuel_low_points]' role='measure' type='quantitative' />
+      <column caption='Teleop Fuel Points' datatype='integer' name='[teleop_fuel_points]' role='measure' type='quantitative' />
+      <column caption='Teleop Points' datatype='integer' name='[teleop_points]' role='measure' type='quantitative' />
+      <column caption='Teleop Rotor Points' datatype='integer' name='[teleop_rotor_points]' role='measure' type='quantitative' />
+      <column caption='Teleop Takeoff Points' datatype='integer' name='[teleop_takeoff_points]' role='measure' type='quantitative' />
+      <column caption='Total Points' datatype='integer' name='[total_points]' role='measure' type='quantitative' />
+      <column-instance column='[adjust_points]' derivation='Avg' name='[avg:adjust_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[auto_fuel_high_points]' derivation='Avg' name='[avg:auto_fuel_high_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[auto_fuel_low_points]' derivation='Avg' name='[avg:auto_fuel_low_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[auto_mobility_points]' derivation='Avg' name='[avg:auto_mobility_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[auto_points]' derivation='Avg' name='[avg:auto_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[auto_rotor_points]' derivation='Avg' name='[avg:auto_rotor_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[foul_points]' derivation='Avg' name='[avg:foul_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[pressure_bonus_points]' derivation='Avg' name='[avg:pressure_bonus_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[rotor_bonus_points]' derivation='Avg' name='[avg:rotor_bonus_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[teleop_fuel_high_points]' derivation='Avg' name='[avg:teleop_fuel_high_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[teleop_fuel_low_points]' derivation='Avg' name='[avg:teleop_fuel_low_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[teleop_points]' derivation='Avg' name='[avg:teleop_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[teleop_rotor_points]' derivation='Avg' name='[avg:teleop_rotor_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[teleop_takeoff_points]' derivation='Avg' name='[avg:teleop_takeoff_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[adjust_points]' derivation='Sum' name='[sum:adjust_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[auto_fuel_high_points]' derivation='Sum' name='[sum:auto_fuel_high_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[auto_fuel_low_points]' derivation='Sum' name='[sum:auto_fuel_low_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[auto_mobility_points]' derivation='Sum' name='[sum:auto_mobility_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[auto_points]' derivation='Sum' name='[sum:auto_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[auto_rotor_points]' derivation='Sum' name='[sum:auto_rotor_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[foul_points]' derivation='Sum' name='[sum:foul_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[pressure_bonus_points]' derivation='Sum' name='[sum:pressure_bonus_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[rotor_bonus_points]' derivation='Sum' name='[sum:rotor_bonus_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[teleop_fuel_high_points]' derivation='Sum' name='[sum:teleop_fuel_high_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[teleop_fuel_low_points]' derivation='Sum' name='[sum:teleop_fuel_low_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[teleop_points]' derivation='Sum' name='[sum:teleop_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[teleop_rotor_points]' derivation='Sum' name='[sum:teleop_rotor_points:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[teleop_takeoff_points]' derivation='Sum' name='[sum:teleop_takeoff_points:qk]' pivot='key' type='quantitative' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.526316' measure-ordering='alphabetic' measure-percentage='0.473684' show-structure='true' user-set-layout='true' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[:Measure Names]' type='palette'>
+            <map to='#1f77b4'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1]&quot;</bucket>
+            </map>
+            <map to='#2ca02c'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_points:qk]&quot;</bucket>
+            </map>
+            <map to='#2ca02c'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:auto_points:qk]&quot;</bucket>
+            </map>
+            <map to='#7f7f7f'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:foul_points:qk]&quot;</bucket>
+            </map>
+            <map to='#7f7f7f'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:foul_points:qk]&quot;</bucket>
+            </map>
+            <map to='#8c564b'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_fuel_low_points:qk]&quot;</bucket>
+            </map>
+            <map to='#8c564b'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:auto_fuel_low_points:qk]&quot;</bucket>
+            </map>
+            <map to='#9467bd'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_rotor_points:qk]&quot;</bucket>
+            </map>
+            <map to='#9467bd'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:auto_rotor_points:qk]&quot;</bucket>
+            </map>
+            <map to='#98df8a'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_fuel_low_points:qk]&quot;</bucket>
+            </map>
+            <map to='#98df8a'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:teleop_fuel_low_points:qk]&quot;</bucket>
+            </map>
+            <map to='#aec7e8'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_rotor_points:qk]&quot;</bucket>
+            </map>
+            <map to='#aec7e8'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:teleop_rotor_points:qk]&quot;</bucket>
+            </map>
+            <map to='#c49c94'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_mobility_points:qk]&quot;</bucket>
+            </map>
+            <map to='#c49c94'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:auto_mobility_points:qk]&quot;</bucket>
+            </map>
+            <map to='#c5b0d5'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_fuel_high_points:qk]&quot;</bucket>
+            </map>
+            <map to='#c5b0d5'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:auto_fuel_high_points:qk]&quot;</bucket>
+            </map>
+            <map to='#d62728'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_points:qk]&quot;</bucket>
+            </map>
+            <map to='#d62728'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:teleop_points:qk]&quot;</bucket>
+            </map>
+            <map to='#e377c2'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:rotor_bonus_points:qk]&quot;</bucket>
+            </map>
+            <map to='#e377c2'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:rotor_bonus_points:qk]&quot;</bucket>
+            </map>
+            <map to='#f7b6d2'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:pressure_bonus_points:qk]&quot;</bucket>
+            </map>
+            <map to='#f7b6d2'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:pressure_bonus_points:qk]&quot;</bucket>
+            </map>
+            <map to='#ff7f0e'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:adjust_points:qk]&quot;</bucket>
+            </map>
+            <map to='#ff7f0e'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:adjust_points:qk]&quot;</bucket>
+            </map>
+            <map to='#ff9896'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_takeoff_points:qk]&quot;</bucket>
+            </map>
+            <map to='#ff9896'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:teleop_takeoff_points:qk]&quot;</bucket>
+            </map>
+            <map to='#ffbb78'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_fuel_high_points:qk]&quot;</bucket>
+            </map>
+            <map to='#ffbb78'>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:teleop_fuel_high_points:qk]&quot;</bucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;Australia&quot;' />
+      </semantic-values>
+      <date-options start-of-week='monday' />
+      <filter class='categorical' column='[division_name]' filter-group='2'>
+        <groupfilter function='except' user:ui-domain='database' user:ui-enumeration='exclusive' user:ui-marker='enumerate'>
+          <groupfilter function='level-members' level='[division_name]' />
+          <groupfilter function='member' level='[division_name]' member='&quot;Unknown&quot;' />
+        </groupfilter>
+      </filter>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Match Score Breakdown (Elims only)'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='teams+ (CUsersJackDropboxFRC 2017 Databasefrc2017.db)' name='genericodbc.0vokqz30bjh9n01380imm0uvatx1' />
+          </datasources>
+          <datasource-dependencies datasource='genericodbc.0vokqz30bjh9n01380imm0uvatx1'>
+            <column caption='Adjust Points' datatype='integer' name='[adjust_points]' role='measure' type='quantitative' />
+            <column caption='Auto Fuel High Points' datatype='integer' name='[auto_fuel_high_points]' role='measure' type='quantitative' />
+            <column caption='Auto Fuel Low Points' datatype='integer' name='[auto_fuel_low_points]' role='measure' type='quantitative' />
+            <column caption='Auto Mobility Points' datatype='integer' name='[auto_mobility_points]' role='measure' type='quantitative' />
+            <column caption='Auto Points' datatype='integer' name='[auto_points]' role='measure' type='quantitative' />
+            <column caption='Auto Rotor Points' datatype='integer' name='[auto_rotor_points]' role='measure' type='quantitative' />
+            <column-instance column='[adjust_points]' derivation='Avg' name='[avg:adjust_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[auto_fuel_high_points]' derivation='Avg' name='[avg:auto_fuel_high_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[auto_fuel_low_points]' derivation='Avg' name='[avg:auto_fuel_low_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[auto_mobility_points]' derivation='Avg' name='[avg:auto_mobility_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[auto_points]' derivation='Avg' name='[avg:auto_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[auto_rotor_points]' derivation='Avg' name='[avg:auto_rotor_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[foul_points]' derivation='Avg' name='[avg:foul_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[pressure_bonus_points]' derivation='Avg' name='[avg:pressure_bonus_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[rotor_bonus_points]' derivation='Avg' name='[avg:rotor_bonus_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[teleop_fuel_high_points]' derivation='Avg' name='[avg:teleop_fuel_high_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[teleop_fuel_low_points]' derivation='Avg' name='[avg:teleop_fuel_low_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[teleop_rotor_points]' derivation='Avg' name='[avg:teleop_rotor_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[teleop_takeoff_points]' derivation='Avg' name='[avg:teleop_takeoff_points:qk]' pivot='key' type='quantitative' />
+            <column caption='Division Name' datatype='string' name='[division_name]' role='dimension' type='nominal' />
+            <column caption='Foul Points' datatype='integer' name='[foul_points]' role='measure' type='quantitative' />
+            <column caption='Name (Match Levels)' datatype='string' name='[name (match_levels)]' role='dimension' type='nominal' />
+            <column-instance column='[division_name]' derivation='None' name='[none:division_name:nk]' pivot='key' type='nominal' />
+            <column-instance column='[name (match_levels)]' derivation='None' name='[none:name (match_levels):nk]' pivot='key' type='nominal' />
+            <column caption='Pressure Bonus Points' datatype='integer' name='[pressure_bonus_points]' role='measure' type='quantitative' />
+            <column caption='Rotor Bonus Points' datatype='integer' name='[rotor_bonus_points]' role='measure' type='quantitative' />
+            <column-instance column='[teleop_points]' derivation='Sum' name='[sum:teleop_points:qk]' pivot='key' type='quantitative' />
+            <column caption='Teleop Fuel High Points' datatype='integer' name='[teleop_fuel_high_points]' role='measure' type='quantitative' />
+            <column caption='Teleop Fuel Low Points' datatype='integer' name='[teleop_fuel_low_points]' role='measure' type='quantitative' />
+            <column caption='Teleop Points' datatype='integer' name='[teleop_points]' role='measure' type='quantitative' />
+            <column caption='Teleop Rotor Points' datatype='integer' name='[teleop_rotor_points]' role='measure' type='quantitative' />
+            <column caption='Teleop Takeoff Points' datatype='integer' name='[teleop_takeoff_points]' role='measure' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]'>
+            <groupfilter function='union' user:op='manual'>
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_rotor_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_fuel_high_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_fuel_low_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_takeoff_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_rotor_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_fuel_high_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_fuel_low_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_mobility_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:rotor_bonus_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:pressure_bonus_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:foul_points:qk]&quot;' />
+            </groupfilter>
+          </filter>
+          <sort class='manual' column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]' direction='ASC'>
+            <dictionary>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:adjust_points:qk]&quot;</bucket>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_points:qk]&quot;</bucket>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:teleop_points:qk]&quot;</bucket>
+            </dictionary>
+          </sort>
+          <filter class='categorical' column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:name (match_levels):nk]'>
+            <groupfilter function='union' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+              <groupfilter function='member' level='[none:name (match_levels):nk]' member='&quot;Finals&quot;' />
+              <groupfilter function='member' level='[none:name (match_levels):nk]' member='&quot;Quarterfinals&quot;' />
+              <groupfilter function='member' level='[none:name (match_levels):nk]' member='&quot;Semifinals&quot;' />
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]</column>
+            <column>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:name (match_levels):nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <color column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]' />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[Multiple Values]</rows>
+        <cols>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:division_name:nk]</cols>
+      </table>
+    </worksheet>
+    <worksheet name='Match Score Breakdown (Quals + Elims)'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='teams+ (CUsersJackDropboxFRC 2017 Databasefrc2017.db)' name='genericodbc.0vokqz30bjh9n01380imm0uvatx1' />
+          </datasources>
+          <datasource-dependencies datasource='genericodbc.0vokqz30bjh9n01380imm0uvatx1'>
+            <column caption='Adjust Points' datatype='integer' name='[adjust_points]' role='measure' type='quantitative' />
+            <column caption='Auto Fuel High Points' datatype='integer' name='[auto_fuel_high_points]' role='measure' type='quantitative' />
+            <column caption='Auto Fuel Low Points' datatype='integer' name='[auto_fuel_low_points]' role='measure' type='quantitative' />
+            <column caption='Auto Mobility Points' datatype='integer' name='[auto_mobility_points]' role='measure' type='quantitative' />
+            <column caption='Auto Points' datatype='integer' name='[auto_points]' role='measure' type='quantitative' />
+            <column caption='Auto Rotor Points' datatype='integer' name='[auto_rotor_points]' role='measure' type='quantitative' />
+            <column-instance column='[adjust_points]' derivation='Avg' name='[avg:adjust_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[auto_fuel_high_points]' derivation='Avg' name='[avg:auto_fuel_high_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[auto_fuel_low_points]' derivation='Avg' name='[avg:auto_fuel_low_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[auto_mobility_points]' derivation='Avg' name='[avg:auto_mobility_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[auto_points]' derivation='Avg' name='[avg:auto_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[auto_rotor_points]' derivation='Avg' name='[avg:auto_rotor_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[foul_points]' derivation='Avg' name='[avg:foul_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[pressure_bonus_points]' derivation='Avg' name='[avg:pressure_bonus_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[rotor_bonus_points]' derivation='Avg' name='[avg:rotor_bonus_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[teleop_fuel_high_points]' derivation='Avg' name='[avg:teleop_fuel_high_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[teleop_fuel_low_points]' derivation='Avg' name='[avg:teleop_fuel_low_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[teleop_rotor_points]' derivation='Avg' name='[avg:teleop_rotor_points:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[teleop_takeoff_points]' derivation='Avg' name='[avg:teleop_takeoff_points:qk]' pivot='key' type='quantitative' />
+            <column caption='Division Name' datatype='string' name='[division_name]' role='dimension' type='nominal' />
+            <column caption='Foul Points' datatype='integer' name='[foul_points]' role='measure' type='quantitative' />
+            <column-instance column='[division_name]' derivation='None' name='[none:division_name:nk]' pivot='key' type='nominal' />
+            <column caption='Pressure Bonus Points' datatype='integer' name='[pressure_bonus_points]' role='measure' type='quantitative' />
+            <column caption='Rotor Bonus Points' datatype='integer' name='[rotor_bonus_points]' role='measure' type='quantitative' />
+            <column-instance column='[teleop_points]' derivation='Sum' name='[sum:teleop_points:qk]' pivot='key' type='quantitative' />
+            <column caption='Teleop Fuel High Points' datatype='integer' name='[teleop_fuel_high_points]' role='measure' type='quantitative' />
+            <column caption='Teleop Fuel Low Points' datatype='integer' name='[teleop_fuel_low_points]' role='measure' type='quantitative' />
+            <column caption='Teleop Points' datatype='integer' name='[teleop_points]' role='measure' type='quantitative' />
+            <column caption='Teleop Rotor Points' datatype='integer' name='[teleop_rotor_points]' role='measure' type='quantitative' />
+            <column caption='Teleop Takeoff Points' datatype='integer' name='[teleop_takeoff_points]' role='measure' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]'>
+            <groupfilter function='union' user:op='manual'>
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_rotor_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_fuel_high_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_fuel_low_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:teleop_takeoff_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_rotor_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_fuel_high_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_fuel_low_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_mobility_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:rotor_bonus_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:pressure_bonus_points:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:foul_points:qk]&quot;' />
+            </groupfilter>
+          </filter>
+          <sort class='manual' column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]' direction='ASC'>
+            <dictionary>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:adjust_points:qk]&quot;</bucket>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:auto_points:qk]&quot;</bucket>
+              <bucket>&quot;[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[sum:teleop_points:qk]&quot;</bucket>
+            </dictionary>
+          </sort>
+          <slices>
+            <column>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <color column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]' />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[Multiple Values]</rows>
+        <cols>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:division_name:nk]</cols>
+      </table>
+    </worksheet>
+    <worksheet name='Match Scores - Adjustment Points (Red Cards)'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='teams+ (CUsersJackDropboxFRC 2017 Databasefrc2017.db)' name='genericodbc.0vokqz30bjh9n01380imm0uvatx1' />
+          </datasources>
+          <datasource-dependencies datasource='genericodbc.0vokqz30bjh9n01380imm0uvatx1'>
+            <column caption='Adjust Points' datatype='integer' name='[adjust_points]' role='measure' type='quantitative' />
+            <column-instance column='[adjust_points]' derivation='Avg' name='[avg:adjust_points:qk]' pivot='key' type='quantitative' />
+            <column caption='Division Name' datatype='string' name='[division_name]' role='dimension' type='nominal' />
+            <column-instance column='[division_name]' derivation='None' name='[none:division_name:nk]' pivot='key' type='nominal' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[avg:adjust_points:qk]</rows>
+        <cols>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:division_name:nk]</cols>
+      </table>
+    </worksheet>
+  </worksheets>
+  <windows source-height='28'>
+    <window class='worksheet' maximized='true' name='Match Score Breakdown (Quals + Elims)'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+            <card pane-specification-id='0' param='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]' type='color' />
+            <card type='measures' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]</field>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:division_name:nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+    </window>
+    <window class='worksheet' name='Match Score Breakdown (Elims only)'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+            <card pane-specification-id='0' param='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]' type='color' />
+            <card type='measures' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[:Measure Names]</field>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:division_name:nk]</field>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:name (match_levels):nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+    </window>
+    <window class='worksheet' name='Match Scores - Adjustment Points (Red Cards)'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:division_name:nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+    </window>
+  </windows>
+  <thumbnails>
+    <thumbnail height='192' name='Match Score Breakdown (Quals + Elims)' width='192'>
+      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
+    </thumbnail>
+    <thumbnail height='192' name='Match Score Breakdown (Elims only)' width='192'>
+      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
+      wIcAAAAASUVORK5CYII=
+    </thumbnail>
+    <thumbnail height='192' name='Match Scores - Adjustment Points (Red Cards)' width='192'>
+      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
+    </thumbnail>
+  </thumbnails>
+</workbook>

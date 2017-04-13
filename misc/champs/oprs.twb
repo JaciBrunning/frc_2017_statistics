@@ -1,0 +1,784 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 9200.15.1215.2037                                -->
+<workbook source-platform='win' version='9.2' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='teams+ (CUsersJackDropboxFRC 2017 Databasefrc2017.db)' inline='true' name='genericodbc.0vokqz30bjh9n01380imm0uvatx1' version='9.2'>
+      <connection class='genericodbc' dbname='C:\Users\Jack\Dropbox\FRC 2017 Database\frc2017.db' odbc-connect-string-extras='StepAPI=0;SyncPragma=NORMAL;NoTXN=0;Timeout=100000;ShortNames=0;LongNames=0;NoCreat=0;NoWCHAR=0;FKSupport=0;JournalMode=;OEMCP=0;LoadExt=;BigInt=0;JDConv=0' odbc-dbms-name='SQLite' odbc-driver='SQLite3 ODBC Driver' odbc-dsn='SQLite3 Datasource' odbc-suppress-connection-pooling='' odbc-use-connection-pooling='' port='' server='' username=''>
+        <relation join='inner' type='join'>
+          <clause type='join'>
+            <expression op='='>
+              <expression op='[teams].[id]' />
+              <expression op='[stats].[team]' />
+            </expression>
+          </clause>
+          <relation join='inner' type='join'>
+            <clause type='join'>
+              <expression op='='>
+                <expression op='[division_teams].[division_name]' />
+                <expression op='[division_event_count].[division_name]' />
+              </expression>
+            </clause>
+            <relation join='inner' type='join'>
+              <clause type='join'>
+                <expression op='='>
+                  <expression op='[teams].[id]' />
+                  <expression op='[division_teams].[team]' />
+                </expression>
+              </clause>
+              <relation name='teams' table='[teams]' type='table' />
+              <relation name='division_teams' table='[division_teams]' type='table' />
+            </relation>
+            <relation name='division_event_count' type='text'>SELECT division_teams.division_name, Count(distinct event_teams.id) as [Event Count], 1.0/Count(distinct event_teams.id) as [Awards Weighting] FROM teams&#13;&#10;INNER JOIN division_teams ON division_teams.team = teams.id&#13;&#10;INNER JOIN event_teams ON event_teams.team = teams.id&#13;&#10;WHERE division_teams.division_name != &quot;Unknown&quot;&#13;&#10;GROUP BY division_teams.division_name</relation>
+          </relation>
+          <relation name='stats' table='[stats]' type='table' />
+        </relation>
+        <cols>
+          <map key='[Awards Weighting]' value='[division_event_count].[Awards Weighting]' />
+          <map key='[Event Count]' value='[division_event_count].[Event Count]' />
+          <map key='[ccwm]' value='[stats].[ccwm]' />
+          <map key='[champ_name]' value='[division_teams].[champ_name]' />
+          <map key='[country]' value='[teams].[country]' />
+          <map key='[division_name (Custom_SQL_Query)]' value='[division_event_count].[division_name]' />
+          <map key='[division_name]' value='[division_teams].[division_name]' />
+          <map key='[dpr]' value='[stats].[dpr]' />
+          <map key='[event]' value='[stats].[event]' />
+          <map key='[id (division_teams)]' value='[division_teams].[id]' />
+          <map key='[id (stats)]' value='[stats].[id]' />
+          <map key='[id]' value='[teams].[id]' />
+          <map key='[key]' value='[teams].[key]' />
+          <map key='[location]' value='[teams].[location]' />
+          <map key='[name]' value='[teams].[name]' />
+          <map key='[nickname]' value='[teams].[nickname]' />
+          <map key='[opr]' value='[stats].[opr]' />
+          <map key='[region]' value='[teams].[region]' />
+          <map key='[rookie_year]' value='[teams].[rookie_year]' />
+          <map key='[team (stats)]' value='[stats].[team]' />
+          <map key='[team]' value='[division_teams].[team]' />
+        </cols>
+        <connection-customization class='genericodbc' enabled='false' version='9.2'>
+          <vendor name='SQLite' />
+          <driver name='SQLite3 ODBC Driver' />
+          <customizations>
+            <customization name='CAP_CREATE_TEMP_TABLES' value='no' />
+            <customization name='CAP_ISOLATION_LEVEL_READ_COMMITTED' value='no' />
+            <customization name='CAP_ISOLATION_LEVEL_READ_UNCOMMITTED' value='no' />
+            <customization name='CAP_ISOLATION_LEVEL_REPEATABLE_READS' value='no' />
+            <customization name='CAP_ISOLATION_LEVEL_SERIALIZABLE' value='no' />
+            <customization name='CAP_ODBC_BIND_DETECT_ALIAS_CASE_FOLDING' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_DATETIME_AS_CHAR' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_DATE_AS_CHAR' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_MAX_STRING_BUFFERS' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_MEDIUM_STRING_BUFFERS' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_SIGNED' value='no' />
+            <customization name='CAP_ODBC_BIND_FORCE_SMALL_STRING_BUFFERS' value='no' />
+            <customization name='CAP_ODBC_BIND_SUPPRESS_INT64' value='no' />
+            <customization name='CAP_ODBC_BIND_SUPPRESS_PREFERRED_TYPES' value='no' />
+            <customization name='CAP_ODBC_BIND_SUPPRESS_WIDE_CHAR' value='no' />
+            <customization name='CAP_ODBC_CURSOR_DYNAMIC' value='no' />
+            <customization name='CAP_ODBC_CURSOR_FORWARD_ONLY' value='no' />
+            <customization name='CAP_ODBC_CURSOR_KEYSET_DRIVEN' value='no' />
+            <customization name='CAP_ODBC_CURSOR_STATIC' value='no' />
+            <customization name='CAP_ODBC_ERROR_IGNORE_FALSE_ALARM' value='no' />
+            <customization name='CAP_ODBC_FETCH_BUFFERS_RESIZABLE' value='no' />
+            <customization name='CAP_ODBC_FETCH_BUFFERS_SIZE_MASSIVE' value='no' />
+            <customization name='CAP_ODBC_FETCH_CONTINUE_ON_ERROR' value='no' />
+            <customization name='CAP_ODBC_METADATA_STRING_LENGTH_UNKNOWN' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_EXECUTED_QUERY' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_PREPARED_QUERY' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_SELECT_STAR' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_SQLCOLUMNS_API' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_SQLFOREIGNKEYS_API' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_SQLPRIMARYKEYS_API' value='no' />
+            <customization name='CAP_ODBC_METADATA_SUPPRESS_SQLSTATISTICS_API' value='no' />
+            <customization name='CAP_ODBC_REBIND_SKIP_UNBIND' value='no' />
+            <customization name='CAP_ODBC_TRIM_VARCHAR_PADDING' value='no' />
+            <customization name='CAP_ODBC_UNBIND_AUTO' value='no' />
+            <customization name='CAP_ODBC_UNBIND_BATCH' value='no' />
+            <customization name='CAP_ODBC_UNBIND_EACH' value='no' />
+            <customization name='CAP_QUERY_BOOLEXPR_TO_INTEXPR' value='yes' />
+            <customization name='CAP_QUERY_FROM_REQUIRES_ALIAS' value='no' />
+            <customization name='CAP_QUERY_GROUP_BY_ALIAS' value='no' />
+            <customization name='CAP_QUERY_GROUP_BY_DEGREE' value='yes' />
+            <customization name='CAP_QUERY_HAVING_REQUIRES_GROUP_BY' value='yes' />
+            <customization name='CAP_QUERY_HAVING_UNSUPPORTED' value='no' />
+            <customization name='CAP_QUERY_JOIN_ACROSS_SCHEMAS' value='no' />
+            <customization name='CAP_QUERY_JOIN_REQUIRES_SCOPE' value='no' />
+            <customization name='CAP_QUERY_NULL_REQUIRES_CAST' value='no' />
+            <customization name='CAP_QUERY_SELECT_ALIASES_SORTED' value='yes' />
+            <customization name='CAP_QUERY_SORT_BY_DEGREE' value='yes' />
+            <customization name='CAP_QUERY_SUBQUERIES' value='yes' />
+            <customization name='CAP_QUERY_SUBQUERIES_WITH_TOP' value='yes' />
+            <customization name='CAP_QUERY_SUBQUERY_QUERY_CONTEXT' value='no' />
+            <customization name='CAP_QUERY_TOPSTYLE_LIMIT' value='yes' />
+            <customization name='CAP_QUERY_TOPSTYLE_ROWNUM' value='no' />
+            <customization name='CAP_QUERY_TOPSTYLE_TOP' value='no' />
+            <customization name='CAP_QUERY_TOP_0_METADATA' value='no' />
+            <customization name='CAP_QUERY_TOP_N' value='yes' />
+            <customization name='CAP_QUERY_WHERE_FALSE_METADATA' value='no' />
+            <customization name='CAP_SELECT_INTO' value='no' />
+            <customization name='CAP_SELECT_TOP_INTO' value='yes' />
+            <customization name='CAP_SET_ISOLATION_LEVEL_VIA_ODBC_API' value='no' />
+            <customization name='CAP_SET_ISOLATION_LEVEL_VIA_SQL' value='no' />
+            <customization name='CAP_SUPPRESS_CONNECTION_POOLING' value='no' />
+            <customization name='CAP_SUPPRESS_DISCOVERY_QUERIES' value='no' />
+            <customization name='SQL_CATALOG_NAME_SEPARATOR' value='.' />
+            <customization name='SQL_CATALOG_TERM' value='' />
+            <customization name='SQL_CATALOG_USAGE' value='0' />
+            <customization name='SQL_COLUMN_ALIAS' value='Y' />
+            <customization name='SQL_CONVERT_FUNCTIONS' value='0' />
+            <customization name='SQL_CURSOR_COMMIT_BEHAVIOR' value='2' />
+            <customization name='SQL_DBMS_NAME' value='SQLite' />
+            <customization name='SQL_DBMS_VER' value='3.15.2' />
+            <customization name='SQL_DRIVER_ODBC_VER' value='03.00' />
+            <customization name='SQL_DRIVER_VER' value='0.9995' />
+            <customization name='SQL_IDENTIFIER_QUOTE_CHAR' value='&quot;' />
+            <customization name='SQL_MAX_IDENTIFIER_LEN' value='255' />
+            <customization name='SQL_NUMERIC_FUNCTIONS' value='0' />
+            <customization name='SQL_ODBC_INTERFACE_CONFORMANCE' value='1' />
+            <customization name='SQL_ODBC_VER' value='03.80.0000' />
+            <customization name='SQL_OJ_CAPABILITIES' value='0' />
+            <customization name='SQL_QUOTED_IDENTIFIER_CASE' value='3' />
+            <customization name='SQL_SCHEMA_TERM' value='' />
+            <customization name='SQL_SCHEMA_USAGE' value='0' />
+            <customization name='SQL_SPECIAL_CHARACTERS' value='' />
+            <customization name='SQL_SQL_CONFORMANCE' value='1' />
+            <customization name='SQL_STRING_FUNCTIONS' value='0' />
+            <customization name='SQL_SYSTEM_FUNCTIONS' value='0' />
+            <customization name='SQL_TABLE_TERM' value='TABLE' />
+            <customization name='SQL_TIMEDATE_ADD_INTERVALS' value='0' />
+            <customization name='SQL_TIMEDATE_DIFF_INTERVALS' value='0' />
+            <customization name='SQL_TIMEDATE_FUNCTIONS' value='0' />
+            <customization name='SQL_TXN_CAPABLE' value='2' />
+          </customizations>
+        </connection-customization>
+        <metadata-records>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>key</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[key]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>key</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>name</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[name]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>name</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>nickname</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[nickname]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>nickname</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>location</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[location]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>location</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>region</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[region]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>region</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>country</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[country]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>country</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>rookie_year</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[rookie_year]</local-name>
+            <parent-name>[teams]</parent-name>
+            <remote-alias>rookie_year</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id (division_teams)]</local-name>
+            <parent-name>[division_teams]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>champ_name</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[champ_name]</local-name>
+            <parent-name>[division_teams]</parent-name>
+            <remote-alias>champ_name</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>division_name</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[division_name]</local-name>
+            <parent-name>[division_teams]</parent-name>
+            <remote-alias>division_name</remote-alias>
+            <ordinal>12</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>team</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[team]</local-name>
+            <parent-name>[division_teams]</parent-name>
+            <remote-alias>team</remote-alias>
+            <ordinal>13</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>division_name</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[division_name (Custom_SQL_Query)]</local-name>
+            <parent-name>[division_event_count]</parent-name>
+            <remote-alias>division_name</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>65536</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Event Count</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[Event Count]</local-name>
+            <parent-name>[division_event_count]</parent-name>
+            <remote-alias>Event Count</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>255</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Awards Weighting</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[Awards Weighting]</local-name>
+            <parent-name>[division_event_count]</parent-name>
+            <remote-alias>Awards Weighting</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>255</width>
+            <contains-null>true</contains-null>
+            <padded-semantics>true</padded-semantics>
+            <collation flag='0' name='binary' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id (stats)]</local-name>
+            <parent-name>[stats]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>18</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>team</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[team (stats)]</local-name>
+            <parent-name>[stats]</parent-name>
+            <remote-alias>team</remote-alias>
+            <ordinal>19</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>event</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[event]</local-name>
+            <parent-name>[stats]</parent-name>
+            <remote-alias>event</remote-alias>
+            <ordinal>20</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>2</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>opr</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[opr]</local-name>
+            <parent-name>[stats]</parent-name>
+            <remote-alias>opr</remote-alias>
+            <ordinal>21</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>4</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_DOUBLE&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_DOUBLE&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>dpr</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[dpr]</local-name>
+            <parent-name>[stats]</parent-name>
+            <remote-alias>dpr</remote-alias>
+            <ordinal>22</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>4</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_DOUBLE&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_DOUBLE&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>ccwm</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[ccwm]</local-name>
+            <parent-name>[stats]</parent-name>
+            <remote-alias>ccwm</remote-alias>
+            <ordinal>23</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>4</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_DOUBLE&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_DOUBLE&quot;</attribute>
+            </attributes>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column datatype='real' datatype-customized='true' name='[Awards Weighting]' role='measure' type='quantitative' />
+      <column aggregation='CountD' datatype='integer' datatype-customized='true' name='[Event Count]' role='measure' type='quantitative' />
+      <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
+        <calculation class='tableau' formula='1' />
+      </column>
+      <column caption='Ccwm' datatype='real' name='[ccwm]' role='measure' type='quantitative' />
+      <column caption='Champ Name' datatype='string' name='[champ_name]' role='dimension' type='nominal' />
+      <column caption='Country' datatype='string' name='[country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
+      <column caption='Division Name' datatype='string' name='[division_name]' role='dimension' type='nominal' />
+      <column caption='Dpr' datatype='real' name='[dpr]' role='measure' type='quantitative' />
+      <column caption='Event' datatype='integer' name='[event]' role='measure' type='quantitative' />
+      <column caption='Id (Division Teams)' datatype='integer' name='[id (division_teams)]' role='dimension' type='ordinal' />
+      <column caption='Id (Stats)' datatype='integer' name='[id (stats)]' role='dimension' type='ordinal' />
+      <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+      <column caption='Key' datatype='string' name='[key]' role='dimension' type='nominal' />
+      <column caption='Location' datatype='string' name='[location]' role='dimension' type='nominal' />
+      <column caption='Name' datatype='string' name='[name]' role='dimension' type='nominal' />
+      <column caption='Nickname' datatype='string' name='[nickname]' role='dimension' type='nominal' />
+      <column caption='Opr' datatype='real' name='[opr]' role='measure' type='quantitative' />
+      <column caption='Region' datatype='string' name='[region]' role='dimension' type='nominal' />
+      <column caption='Rookie Year' datatype='integer' name='[rookie_year]' role='dimension' type='quantitative' />
+      <column caption='Team (Stats)' datatype='integer' name='[team (stats)]' role='measure' type='quantitative' />
+      <column caption='Team' datatype='integer' name='[team]' role='measure' type='quantitative' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.592548' measure-ordering='alphabetic' measure-percentage='0.407452' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;Australia&quot;' />
+      </semantic-values>
+      <date-options start-of-week='monday' />
+      <filter class='categorical' column='[division_name]' filter-group='2'>
+        <groupfilter function='except' user:ui-domain='database' user:ui-enumeration='exclusive' user:ui-marker='enumerate'>
+          <groupfilter function='level-members' level='[division_name]' />
+          <groupfilter function='member' level='[division_name]' member='&quot;Unknown&quot;' />
+        </groupfilter>
+      </filter>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='OPR Box Plot'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='teams+ (CUsersJackDropboxFRC 2017 Databasefrc2017.db)' name='genericodbc.0vokqz30bjh9n01380imm0uvatx1' />
+          </datasources>
+          <datasource-dependencies datasource='genericodbc.0vokqz30bjh9n01380imm0uvatx1'>
+            <column caption='Division Name' datatype='string' name='[division_name]' role='dimension' type='nominal' />
+            <column-instance column='[division_name]' derivation='None' name='[none:division_name:nk]' pivot='key' type='nominal' />
+            <column-instance column='[opr]' derivation='None' name='[none:opr:qk]' pivot='key' type='quantitative' />
+            <column caption='Opr' datatype='real' name='[opr]' role='measure' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='cell'>
+            <format attr='width' field='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:division_name:nk]' value='84' />
+          </style-rule>
+          <style-rule element='refline'>
+            <format attr='fill-above' id='refline1' value='#00000000' />
+            <format attr='fill-below' id='refline1' value='#00000000' />
+            <format attr='fill-above' id='refline2' value='#00000000' />
+            <format attr='fill-below' id='refline2' value='#00000000' />
+            <format attr='line-pattern' id='refline2' value='dashed' />
+          </style-rule>
+          <style-rule element='refband'>
+            <format attr='fill-color' id='refline3' value='#0000001e' />
+          </style-rule>
+          <style-rule element='refboxplot'>
+            <format attr='palette' id='refline0' value='bp_purple' />
+            <format attr='whisker-stroke-size' id='refline0' value='1' />
+            <format attr='whisker-stroke-color' id='refline0' value='#000000' />
+            <format attr='opacity' id='refline0' value='173' />
+            <format attr='stroke-size' id='refline0' value='1' />
+            <format attr='whisker-end' id='refline0' value='large' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='5'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <reference-line axis-column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:opr:qk]' boxplot-mark-exclusion='true' boxplot-whisker-type='minmax' enable-instant-analytics='true' formula='average' id='refline0' label-type='automatic' probability='95' scope='per-cell' symmetric='false' value-column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:opr:qk]' z-order='1' />
+            <reference-line axis-column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:opr:qk]' enable-instant-analytics='true' formula='average' id='refline1' label-type='automatic' probability='95' scope='per-cell' value-column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:opr:qk]' z-order='2' />
+            <reference-line axis-column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:opr:qk]' enable-instant-analytics='true' formula='average' id='refline2' label-type='automatic' probability='95' scope='per-table' value-column='[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:opr:qk]' z-order='3' />
+            <style>
+              <style-rule element='datalabel'>
+                <format attr='color-mode' value='auto' />
+                <format attr='font-style' value='italic' />
+              </style-rule>
+              <style-rule element='mark'>
+                <format attr='mark-color' value='#4f6e8d' />
+                <format attr='size' value='0.31784531474113464' />
+                <format attr='mark-labels-mode' value='all' />
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='-1' />
+                <format attr='maxwidth' value='-1' />
+                <format attr='minwidth' value='-1' />
+                <format attr='maxwidth' value='-1' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:opr:qk]</rows>
+        <cols>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:division_name:nk]</cols>
+      </table>
+    </worksheet>
+  </worksheets>
+  <windows source-height='28'>
+    <window class='worksheet' maximized='true' name='OPR Box Plot'>
+      <cards>
+        <edge name='left'>
+          <strip size='178'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:Calculation_967429559227584512:qk]</field>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:Calculation_967429559227641857:qk]</field>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:Calculation_967429559228076040:qk]</field>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:Calculation_967429559228928015:qk]</field>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:Calculation_967429559232925718:qk]</field>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:Calculation_967429559232974871:qk]</field>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:division_name:nk]</field>
+            <field>[genericodbc.0vokqz30bjh9n01380imm0uvatx1].[none:name (award_types):nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+    </window>
+  </windows>
+  <thumbnails>
+    <thumbnail height='192' name='OPR Box Plot' width='192'>
+      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
+    </thumbnail>
+  </thumbnails>
+</workbook>
