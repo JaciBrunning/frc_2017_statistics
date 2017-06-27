@@ -82,4 +82,4 @@ end
 end
 
 puts "team,rating,matches_played,rank\n"
-puts @team_elo.map { |x, y| "#{x},#{y[:rating].round(0)},#{y[:played]},#{RANK.call(y[:rating])}" }.join("\n")
+puts @team_elo.map { |x, y| "#{x},#{y[:rating].round(0)},#{y[:played]},#{RANK.call(y[:rating].round(0))}" }.join("\n")
